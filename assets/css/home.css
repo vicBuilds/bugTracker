@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Babylonica&family=Dancing+Script&family=Lobster&family=Oxanium:wght@600&family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
+
+
+body{
+    margin: 0;
+    padding:10px;
+    font-size: 40px;
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(123, 230, 230);
+}
+
+
+.form-control{
+    margin: 20px 0px;
+}
+
+/* #addproject{
+    position: absolute;
+    top:0;
+    right: 8px;
+} */
+
+ header{
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} 
+.project-item{
+    margin-right: 15px;
+}
+
+#list-of-projects{
+    font-size: 1vw;
+    width: 95%;
+    margin-top: 40px;
+
+}
+.card{
+    padding: 20px;
+    margin: 20px 0px;
+    font-size: 1vw;
+}
+#list-of-projects{
+    background-color: rgb(83, 196, 63);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}

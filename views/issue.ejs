@@ -71,7 +71,7 @@
        <div id="search-issues">
         <form class="search">
             <div class="input-searchbyTitle">
-                <input placeholder="Enter the Title to Search" name="title" id="search-value">
+                <input placeholder="Enter the Title to Search" name="title" id="search-value" required>
             </div>
 
             <!-- <div class="label-assigned">
@@ -100,7 +100,7 @@
                 <label for="label">Choose a Label:</label>
                 <select id="label" name="label">
                     
-                    <option value="none">None</option>
+                    <option value="none">All Labels</option>
 
                     <% for(let i of label){%>
                         <option value="<%=i%>"><%= i%></option>
@@ -112,7 +112,7 @@
                 <div class="label-assigned">
                     <label for="assigned">Assigned:</label>  
                     <select id="assigned" name="assigned">
-                        <option value="none">None</option>
+                        <option value="none">All</option>
                 
                         <% for(let i of assigned){%>
                             <option value="<%=i%>"><%= i%></option>

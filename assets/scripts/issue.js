@@ -46,8 +46,13 @@ function doFilter(fullData, labelValue, assignedValue){
             return item.label==labelValue&&item.assigned==assignedValue;
         });
     }
+
+    if(filterData.length==0){
+        issueListContainer.innerHTML=`<span><i class="fa-solid fa-heart-crack"></i></span><span>Sorry! No Result Found</span>`;
+        return;
+    }
     
-    console.log(filterData);
+    // console.log(filterData);
     issueListContainer.innerHTML=''; 
     issueListContainer.innerHTML=`<h5><i class="fa-solid fa-list"></i>&nbsp List of Issues</h5>
     <ul type="none" id="ul-issues">`;
@@ -89,13 +94,22 @@ function ajax2(title){
 
 // Function to Handle Search
 function handleSearch(issues,title){
+    
     let filterData=issues.filter(function(items){
         return items.title==title;
     });
 
+
     let issueListContainer=document.getElementById('list-of-issues');
 
     issueListContainer.innerHTML=''; 
+    
+
+    if(filterData.length==0){
+        issueListContainer.innerHTML=`<span><i class="fa-solid fa-heart-crack"></i></span><span>Sorry! No Result Found</span>`;
+        return;
+    }
+
     issueListContainer.innerHTML=`<h5><i class="fa-solid fa-list"></i>&nbsp List of Issues</h5>
     <ul type="none" id="ul-issues">`;
     let ul=document.getElementById('ul-issues');
@@ -129,6 +143,9 @@ let searchbutton=document.getElementById('submit-search');
 
 searchbutton.addEventListener('click', function(event){
     let searchvalue=document.getElementById('search-value').value;
+    if(searchvalue==''){
+        return;
+    }
     document.getElementById('search-value').value='';
     event.preventDefault();
     ajax2(searchvalue);

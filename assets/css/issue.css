@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Babylonica&family=Dancing+Script&family=Lobster&family=Oxanium:wght@600&family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
+
+body{
+    background-color: #ffa600;
+    font-family: 'Poppins', sans-serif;
+    margin:0;
+    padding: 30px;
+}
+.card{
+    margin: 10px 0px;
+    width: 80%;
+    padding: 20px;
+    background-color: antiquewhite;
+}
+.card-label{
+    background-color: red;
+    width: 15%;
+
+}
+#list-of-issues{
+    background-color: #d8e22b;
+    margin: 20px 0px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+.form-control{
+    margin: 15px 0px;
+}
+
+#addissue button{
+    margin-top: 25px;
+}
+.card-title{
+    font-size: 1.3rem;
+}
+.project-description{
+    width:80%;
+}
+#project-info{
+    background-color: #ffc107;
+    padding: 20px;
+}
+.btn{
+    transition: 1.0s;
+}
+.btn:hover{
+    letter-spacing: 1px;}
+
+#filter-container{
+    margin-top: 25px;
+    background-color: bisque;
+    padding: 20px;
+    font-weight: 700;
+}
+.filter{
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+#search-issues{
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+

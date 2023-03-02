@@ -25,7 +25,6 @@
                 <div class="modal-content">
                     <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel"> ADD A NEW PROJECT</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form method="post" action="/project/create">
@@ -54,10 +53,11 @@
                     <div class="card">
                         <span class="project-item"><b>Name of the Project :</b>&nbsp<%= item.name%></span>
                         <span class="project-item"><b>Manager :</b>&nbsp<%= item.manager%></span>
-                        <span class="project-item"><b>Issues :</b>&nbsp<%= item.issues.length%></span>
+                        <span class="project-item issue"><b>Issues :</b>&nbsp<%= item.issues.length%></span>
 
-                        <form action="/project/issues/<%= item._id%>" method="get"><button type="submit" class="btn btn-success">Open Project</button></form>
+                        <form action="/project/issues/<%= item._id%>" method="get"><button type="submit" class="btn btn-success"><i class="fa-solid fa-location-arrow"></i>&nbsp Open Project</button></form>
                         
+                        <form action="/project/delete/<%= item._id%>" method="get"><button type="submit" class="btn btn-success"><i class="fa-solid fa-trash-can"></i>&nbsp Delete Project</button></form>
                     </div>
 
                 </li>

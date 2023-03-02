@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/issue.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <title>Issue Tracker</title>  
+</head>
+<body>
+
+    <header>
+        <div id="project-info">
+        <h1>Project: <%= project.name%></h1>
+        <h4>Issues to be resolved: <%= project.issues.length%></h4>
+        <p class="project-description"><b>Project Description: <%= project.description%></b></p>
+        <h4>Managed by: <%= project.manager%></h4>
+        <a href="/"><button type="button" class="btn btn-secondary"><i class="fa-solid fa-angles-left"></i> Project Page</button></a>
+        </div>
+
+
+        <div id="addissue">
+                        <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="fa-solid fa-plus"></i>&nbsp ADD ISSUE
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel"> ADD A NEW ISSUE</h1>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="/project/issue/create/<%= project._id%>">
+                                
+
+                                <input type="text" class="form-control" id="issue-title" placeholder="Add title" name="title" required>
+
+                                <input type="text" class="form-control" id="issue-assigned" placeholder="Assigned to" name="assigned" required>
+                                <!--Label for the Issue  -->
+                                <select class="form-select" aria-label="Default select example" name="label">
+                                    <option selected>Internal</option>
+                                    <option value="External">External</option>
+                                    <option value="ThirdParty">Third Party</option>
+                                    <option value="Urgent">Urgent</option>
+                                    <option value="LowPriority">Low Priority</option>
+                                  </select>
+
+                                <textarea class="form-control" placeholder="Brief Description of the Issue" id="project-description" style="height: 200px" name="description" required></textarea>
+                            <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i>&nbsp Add Issue</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        
+                        </div>
+                    </div>
+                    </div>
+                </div>
+        </div>  
+       </header>
+
+
+       <div id="search-issues">
+        <form class="search">
+            <div class="input-searchbyTitle">
+                <input placeholder="Enter the Title to Search" name="title" id="search-value">
+            </div>
+
+            <!-- <div class="label-assigned">
+                <label for="assigned">Assigned:</label>  
+                <select id="assigned" name="assigned">
+                    <option value="none">None</option>
+            
+                    <% for(let i of assigned){%>
+                        <option value="<%=i%>"><%= i%></option>
+                <%}%>
+
+                </select>     
+            </div> --> 
+        </form>
+
+        <button class="btn btn-primary" id="submit-search"><i class="fa-solid fa-magnifying-glass"></i></button>  
+
+       </div>
+
+
+
+       <div id="filter-container">
+            <h5><i class="fa-solid fa-filter-circle-xmark"></i>&nbspFilter</h5>
+            <form class="filter">
+                <div class="label-drop">
+                <label for="label">Choose a Label:</label>
+                <select id="label" name="label">
+                    
+                    <option value="none">None</option>
+
+                    <% for(let i of label){%>
+                        <option value="<%=i%>"><%= i%></option>
+                <%}%>     
+                
+                </select> 
+                </div>
+
+                <div class="label-assigned">
+                    <label for="assigned">Assigned:</label>  
+                    <select id="assigned" name="assigned">
+                        <option value="none">None</option>
+                
+                        <% for(let i of assigned){%>
+                            <option value="<%=i%>"><%= i%></option>
+                    <%}%>
+
+                    </select>     
+                </div>
+
+            <button type="submit" class="btn btn-primary" id="submit-filter"><i class="fa-solid fa-filter"></i>&nbspFilter Issues</button>   
+
+            </form>
+       </div>
+
+
+       <div id="list-of-issues">
+
+        <h5><i class="fa-solid fa-list"></i>&nbsp List of Issues</h5>
+            <ul type="none" id="ul-issues">
+                <% for(let item of project.issues){%>
+                    <li id="<%= item._id%>">
+                        <div class="card">
+                            <span class="project-item card-title" ><b>Title :</b>&nbsp<%= item.title%></span>
+                            <span class="project-item card-assigned"><b>Assigned :</b>&nbsp<%= item.assigned%></span>
+                            <span class="project-item card-label"><b>Label :</b>&nbsp<%= item.label%></span>
+                            <span class="project-item card-desription"><b>Isssue Details :</b>&nbsp<%= item.description%></span>
+                            <span class="project-item card-date"><b>Created :</b>&nbsp<%= item.createdAt%></span>
+                            <form action="/issue/delete/<%= item._id%>" method="get"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i>&nbsp Resolved</button></form>                   
+                        </div>
+                    </li>
+                <%}%>    
+    
+            </ul>    
+        </div>
+
+
+        <div id="project-detail" data-project="<%= project.id%>"></div>
+
+<script src="/scripts/issue.js"></script>  
+</body>
+</html>

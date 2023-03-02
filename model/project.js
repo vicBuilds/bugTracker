@@ -15,7 +15,7 @@ const projectSchema=new mongoose.Schema({
     },
 
     issues:[{
-        type:mongoose.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:'issues'
     }]},
 
@@ -26,5 +26,4 @@ const projectSchema=new mongoose.Schema({
 )
 
 const project=mongoose.model('project',projectSchema);
-
 module.exports=project;

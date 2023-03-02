@@ -1,10 +1,13 @@
 const express= require('express');
 const app= express();
 const port= 8000;
-const route=require('./routes/index');
+
 const db=require('./config/mongoose');
 
-app.use(express.static('./assets/'));
+const route=require('./routes/index');
+
+
+app.use(express.static('./assets'));
 app.use(express.urlencoded());
 app.use('/',route);
 

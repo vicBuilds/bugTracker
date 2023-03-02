@@ -14,9 +14,7 @@ const issueSchema=new mongoose.Schema({
     assigned:{
         type:String,
     },
-    author:{
-        type:String
-    },
+
     status:{
         type:String,
     },
@@ -31,5 +29,5 @@ const issueSchema=new mongoose.Schema({
 
 )
 
-const issues=mongoose.model('issue',issueSchema);
+const issues=mongoose.model('issues',issueSchema);
 module.exports=issues;

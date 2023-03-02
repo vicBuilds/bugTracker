@@ -6,7 +6,7 @@ body{
     padding:10px;
     font-size: 40px;
     font-family: 'Poppins', sans-serif;
-    background-color: rgb(123, 230, 230);
+    background-color: rgb(241 165 0);
 }
 
 
@@ -23,8 +23,16 @@ body{
  header{
     width: 90%;
     display: flex;
+    font-weight: 800;
+    letter-spacing: 2px;
     justify-content: space-between;
     align-items: center;
+    font-size: 5vw;
+    color: white;
+    text-shadow: 0px 2px 5px rgb(26, 31, 26);
+    padding: 24px;
+    background-color: #ff9800;
+    box-shadow: 0px 0px 61px 0px #fefeeb;
 } 
 .project-item{
     margin-right: 15px;
@@ -34,18 +42,37 @@ body{
     font-size: 1vw;
     width: 95%;
     margin-top: 40px;
-
+    box-shadow: 0px 5px 10px 01px rgb(56, 55, 55);
 }
+#list-of-projects h5{
+    font-size: 2.25rem;
+}
+
 .card{
     padding: 20px;
     margin: 20px 0px;
-    font-size: 1vw;
+    font-size: 18px;
+    color: #7e7777;
+    box-shadow: 0px 5px 10px 01px rgb(56, 55, 55);
 }
 #list-of-projects{
-    background-color: rgb(83, 196, 63);
+    background-color: #ffeb3b;
     padding: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+}
+.btn{
+    margin-top: 10px;
+    transition: 1.0s;
+}
+.btn:hover{
+    letter-spacing: 1px;
+}
+
+.issue{
+    background-color: red;
+    width: 8%;
+    color: white;
+    padding-left: 10px;
 }

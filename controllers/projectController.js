@@ -1,16 +1,30 @@
 const project=require('../model/project');
 const issue=require('../model/issues');
 
+
+// Global function to handle all errors
+
 function globalerror(err){
     console.log("The error is  ",err);
 }
 
+
+// HomePage for the Issue Tracker preload all the project and render the home page
+
 module.exports.home=async function(req,res){
-    let all_list=await project.find({}).sort('-createdAt');
-    return res.render('home',{
-        project:all_list
-    });
+    try{
+        let all_list=await project.find({}).sort('-createdAt');
+        return res.render('home',{
+            project:all_list
+        });
+    }catch(err){
+        globalerror(err);
+        return;
+    }
+
 }
+
+// Creating a new Project trim for extra spaces
 
 module.exports.create=async function(req,res){
     try{
@@ -27,83 +41,74 @@ module.exports.create=async function(req,res){
 
 }
 
+
+// Loading the Issues page of a Particular Project
+
 module.exports.issues= async function(req,res){
-  let item=await project.findById(req.params.id).populate('issues');
+  try{  
+    let item=await project.findById(req.params.id).populate('issues');
 
-    //return res.redirect('back');
-    // console.log(item.issues);
-    // for(let i of item.issues){
-    //     console.log(i.title);
-    //     console.log(i.label);
-        
+            let assigned=[];
+            let label=[];
+            for(let i of item.issues){
+                label.push(i.label);
+                assigned.push(i.assigned);
+            }
 
-    
-        //    item.populate('issues');
-        //    return res.render('issue',{
-        //     post:item,
-        //    });
-        // console.log(item);
-        // return res.redirect('back');
-        // console.log(item.issues[0]);
+        label=label.filter((item, 
+            index) => label.indexOf(item) === index);
 
-        let assigned=[];
-        let label=[];
-        for(let i of item.issues){
-            label.push(i.label);
-            assigned.push(i.assigned);
-        }
+        assigned=assigned.filter((item, 
+                index) => assigned.indexOf(item) === index); 
 
-    //    console.log(label);
-    //    console.log(assigned); 
+            // console.log(label);
+            // console.log(assigned);      
 
-    //  Remove the Duplicates from the Label and Assigned Array
-
-       label=label.filter((item, 
-        index) => label.indexOf(item) === index);
-
-       assigned=assigned.filter((item, 
-            index) => assigned.indexOf(item) === index); 
-
-        // console.log(label);
-        // console.log(assigned);      
-
-        return res.render('issue',{
-            project:item,
-            label:label,
-            assigned:assigned
-        });
+            return res.render('issue',{
+                project:item,
+                label:label,
+                assigned:assigned
+            });
+    }catch(err){
+        globalerror(err);
+    }
 }
+
+
+// Creating a New Issue, set the status as pending initially
 
 module.exports.createNewIssue= async function(req,res){
 
     try{
-    let projectitem=await project.findById(req.params.id);
+            let projectitem=await project.findById(req.params.id);
 
-   // console.log(req.body);
+        // console.log(req.body);
 
-    // return res.send("Working on this");
+            // return res.send("Working on this");
 
-     let newIssue= await issue.create({
-         title: req.body.title,
-         description:req.body.description,
-         label:req.body.label,
-         assigned:req.body.assigned,
-         status:"Pending",
-         project:projectitem._id
- })
-    
-      await projectitem.issues.push(newIssue);
-      await projectitem.save();
+            let newIssue= await issue.create({
+                title: req.body.title,
+                description:req.body.description,
+                label:req.body.label,
+                assigned:req.body.assigned,
+                status:"Pending",
+                project:projectitem._id
+        })
+            
+            await projectitem.issues.push(newIssue);
+            await projectitem.save();
 
- return res.redirect('back');
+        return res.redirect('back');
 
-}catch(err){
-    console.log("There is some error in creting a issue", err);
-    return res.redirect('back');
+    }catch(err){
+        globalerror(err);
+        return;
+    }
+
+
 }
 
-
-}
+// Deleting a Post
 
 module.exports.delete=async function(req,res){
     let id=req.params.id;
@@ -116,6 +121,8 @@ module.exports.delete=async function(req,res){
     return res.redirect('back');
 }
 
+
+// Handle the Ajax request from Front End (from the Issues page) and send all the date relatinf to the Project
 module.exports.load=async function(req,res){
     let id= req.params.id;
     let pro= await project.findById(id).populate('issues');
@@ -125,33 +132,30 @@ module.exports.load=async function(req,res){
     })
 }
 
+/*
+Deleting a Issue, steps required:
+1. Get the IssueId and ProjectId in Request params
+2. Delete the Issue
+3. Pull the Issue from the array of Issues in Project Page
+4. Redirect the User back
+*/
+
 module.exports.deleteIssue= async function(req,res){
-
     const{issueId,projectId}=req.params;
-
-    console.log("Issue id is this", issueId);
-    console.log('Project id is this', projectId);
-
-
      try{
-     await issue.findByIdAndDelete(req.params.issueId);
+        await issue.findByIdAndDelete(req.params.issueId);
 
-     let projectReq=await project.findById(req.params.projectId);
-     
-    //  User.updateOne(
-    //     { _id: userId },
-    //     { $pull: { friends: { friendId: friendIdToRemove } } }
-    //   )
-     
-     await projectReq.updateOne({$pull: {issues: req.params.issueId}}) 
+        let projectReq=await project.findById(req.params.projectId);
+        
+        // Pull the Issue from the array of Issues in Project Page
+        await projectReq.updateOne({$pull: {issues: req.params.issueId}}) 
 
-     await projectReq.save();
+        await projectReq.save();
 
-     return res.redirect('back');
-     }
+        return res.redirect('back');
+        }
      catch(err){
-        console.log("Error in Deleting the Isssue", err);
-       return res.redirect('back');
+        globalerror(err);
      }
    
 }

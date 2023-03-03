@@ -1,13 +1,13 @@
+// Storing the project ID if required for use in a div using a custom attribute
 let url=document.getElementById('project-detail').dataset.project;
+
+
 let total_issue;
 
-// fetch(`load/${url}`)
-// .then(response => response.json())
-// .then(function(data){
-//    console.log(data.message);
-// })
 
 let filteredArrayOfIssues=[];
+
+/* Ajax request that handles the Filter Function*/
 
 function ajax(labelValue, assignedValue){ 
 $.ajax({
@@ -24,6 +24,7 @@ $.ajax({
 
 }
 
+/* Handles the filter function and renders only the data send by the filter dropdown */
 
 function doFilter(fullData, labelValue, assignedValue){
     let issueListContainer=document.getElementById('list-of-issues');
@@ -75,7 +76,7 @@ function doFilter(fullData, labelValue, assignedValue){
 }
 
 
-// Search Ajax
+// This is a ajax request which is called when the Search button is clicked
 
 function ajax2(title){
     $.ajax({
@@ -92,7 +93,8 @@ function ajax2(title){
 
 }
 
-// Function to Handle Search
+// Function to Handle Search after the ajax request is succesfull
+
 function handleSearch(issues,title){
     
     let filterData=issues.filter(function(items){
@@ -135,11 +137,13 @@ function handleSearch(issues,title){
 
 
 
-
+// Required all what is required from the DOM tree
 let filterbutton=document.getElementById('submit-filter');
 let labelDropdown=document.getElementById('label');
 let assignedDropdown=document.getElementById('assigned');
 let searchbutton=document.getElementById('submit-search');
+
+// Handles what to do when you hit the search button
 
 searchbutton.addEventListener('click', function(event){
     let searchvalue=document.getElementById('search-value').value;
@@ -152,10 +156,10 @@ searchbutton.addEventListener('click', function(event){
 
 })
 
+// Handles what to do when some one hits the filter button
+
 filterbutton.addEventListener('click', function(event){
     event.preventDefault();
-    // console.log(labelDropdown.value);
-    // console.log(assignedDropdown.value);
     ajax(labelDropdown.value,assignedDropdown.value);
 });
 

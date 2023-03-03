@@ -125,3 +125,33 @@ module.exports.load=async function(req,res){
     })
 }
 
+module.exports.deleteIssue= async function(req,res){
+
+    const{issueId,projectId}=req.params;
+
+    console.log("Issue id is this", issueId);
+    console.log('Project id is this', projectId);
+
+
+     try{
+     await issue.findByIdAndDelete(req.params.issueId);
+
+     let projectReq=await project.findById(req.params.projectId);
+     
+    //  User.updateOne(
+    //     { _id: userId },
+    //     { $pull: { friends: { friendId: friendIdToRemove } } }
+    //   )
+     
+     await projectReq.updateOne({$pull: {issues: req.params.issueId}}) 
+
+     await projectReq.save();
+
+     return res.redirect('back');
+     }
+     catch(err){
+        console.log("Error in Deleting the Isssue", err);
+       return res.redirect('back');
+     }
+   
+}

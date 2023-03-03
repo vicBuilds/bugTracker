@@ -13,7 +13,7 @@ route.post('/issue/create/:id',projectController.createNewIssue);
 
 route.get('/issues/load/:id', projectController.load);
 
-
+route.get('/issues/delete/:issueId/:projectId', projectController.deleteIssue);
 
 
 module.exports=route;

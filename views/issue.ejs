@@ -139,7 +139,7 @@
                             <span class="project-item card-label"><b>Label :</b>&nbsp<%= item.label%></span>
                             <span class="project-item card-desription"><b>Isssue Details :</b>&nbsp<%= item.description%></span>
                             <span class="project-item card-date"><b>Created :</b>&nbsp<%= item.createdAt%></span>
-                            <form action="/issue/delete/<%= item._id%>" method="get"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i>&nbsp Resolved</button></form>                   
+                            <form action="/project/issues/delete/<%= item._id%>/<%= project.id%>" method="get"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i>&nbsp Resolved</button></form>                   
                         </div>
                     </li>
                 <%}%>    

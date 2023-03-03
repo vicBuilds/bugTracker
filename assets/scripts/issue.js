@@ -2,10 +2,8 @@
 let url=document.getElementById('project-detail').dataset.project;
 
 
-let total_issue;
-
-
-let filteredArrayOfIssues=[];
+// let total_issue;
+// let filteredArrayOfIssues=[];
 
 /* Ajax request that handles the Filter Function*/
 

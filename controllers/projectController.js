@@ -12,8 +12,10 @@ function globalerror(err){
 // HomePage for the Issue Tracker preload all the project and render the home page
 
 module.exports.home=async function(req,res){
+
     try{
         let all_list=await project.find({}).sort('-createdAt');
+        // console.log(all_list.length);
         return res.render('home',{
             project:all_list
         });
@@ -112,11 +114,11 @@ module.exports.createNewIssue= async function(req,res){
 
 module.exports.delete=async function(req,res){
     let id=req.params.id;
-    let result_issue_delete=await issue.deleteMany({
-        project_id:id
-    });
-
+    
     let project_many=await project.findByIdAndDelete(id);
+    
+    let issues=await issue.deleteMany({project:id});
+
 
     return res.redirect('back');
 }

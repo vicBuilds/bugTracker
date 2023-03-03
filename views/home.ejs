@@ -47,7 +47,13 @@
    <div id="list-of-projects">
 
     <h5><i class="fa-solid fa-list"></i>&nbsp List of All Projects</h5>
+       
         <ul type="none">
+
+            <%if (project.length==0){%>
+                <p><i class="fa-solid fa-file-circle-plus"></i>&nbspNo Project to render. Please add one to get started.</p>
+                <%}%>
+
             <% for(let item of project){%>
                 <li id="<%= item._id%>">
                     <div class="card">
@@ -66,6 +72,6 @@
         </ul>    
     </div>
 
-    <%- include('_footer'); %> 
+    <!-- <%- include('_footer'); %>  -->
 </body>
 </html>
